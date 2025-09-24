@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BitcoinPro - Secure Crypto Banking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fab fa-bitcoin logo-icon"></i>
+                    <div class="logo-text">BitcoinPro</div>
+                </div>
+                <div class="wallet-link">
+                    <a href="#" id="randomWalletLink">
+                        <i class="fas fa-wallet"></i>
+                        <span>Bitcoin Wallet</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Auth Container -->
+    <div class="auth-container" id="authContainer">
+        <div class="auth-box">
+            <div class="auth-tabs" id="authTabs">
+                <div class="auth-tab active" data-tab="login">Login</div>
+                <div class="auth-tab" data-tab="signup">Sign Up</div>
+            </div>
+            
+            <form class="auth-form active" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="button" class="auth-btn" id="loginBtn">Login to Account</button>
+            </form>
+            
+            <form class="auth-form" id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" placeholder="Create a password (min. 8 characters with letters and numbers)" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="signupConfirmPassword">Confirm Password</label>
+                    <input type="password" id="signupConfirmPassword" placeholder="Confirm your password" required>
+                </div>
+                
+                <button type="button" class="auth-btn" id="signupBtn">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="container dashboard" id="dashboard">
+        <div class="user-header">
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div class="user-details">
+                    <h2 id="userName">User Name</h2>
+                    <p id="userEmail">user@example.com</p>
+                </div>
+            </div>
+            
+            <button class="auth-btn" id="logoutBtn">Logout</button>
+        </div>
+        
+        <div class="balance-card">
+            <div class="btc-gif">
+                <div style="width: 120px; height: 120px; background: linear-gradient(90deg, #f7931a 0%, #ffcc80 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                    <i class="fab fa-bitcoin" style="font-size: 60px; color: #1a202c;"></i>
+                </div>
+            </div>
+            <h3>Your Account Balance</h3>
+            <div class="balance-amount">$<span id="balance">200.00</span></div>
+        </div>
+        
+        <div class="action-buttons">
+            <div class="action-btn" id="depositBtn">
+                <i class="fas fa-money-bill-wave"></i>
+                <h3>Deposit Funds</h3>
+                <p>Add money to your account</p>
+            </div>
+            
+            <div class="action-btn locked" id="withdrawBtn">
+                <i class="fas fa-wallet"></i>
+                <h3>Withdraw Funds</h3>
+                <p>Withdraw money from your account</p>
+            </div>
+            
+            <div class="action-btn" id="buyBtcBtn">
+                <i class="fab fa-bitcoin"></i>
+                <h3>Buy Bitcoin</h3>
+                <p>Purchase Bitcoin instantly</p>
+            </div>
+            
+            <div class="action-btn locked">
+                <i class="fas fa-exchange-alt"></i>
+                <h3>Transfer Funds</h3>
+                <p>Send money to other accounts</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loader"></div>
+        <div class="loading-text">Loading your account...</div>
+    </div>
+
+    <!-- Welcome Bonus Modal -->
+    <div class="welcome-bonus" id="welcomeBonus">
+        <div class="bonus-modal">
+            <div class="bonus-icon">
+                <i class="fas fa-gift"></i>
+            </div>
+            <h2>Congratulations!</h2>
+            <p>Your account has been credited with <strong>$200 Welcome Bonus</strong></p>
+            <button class="auth-btn" id="bonusBtn">Continue to Dashboard</button>
+        </div>
+    </div>
+
+    <!-- Withdraw Modal -->
+    <div class="modal-overlay" id="withdrawModal">
+        <div class="modal">
+            <button class="modal-close" id="withdrawClose">&times;</button>
+            
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3>Withdrawal Restricted</h3>
+                <p>Account requirements not met</p>
+            </div>
+            
+            <div class="modal-content">
+                <p>To withdraw from your account, you must have deposited at least $10 in your account either by bank transfer or Bitcoin received payment.</p>
+                <p>After that, you will be able to withdraw your bonus, make transactions, buy cryptos and receive payments.</p>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-btn btn-primary" id="goToDeposit">Deposit Now</button>
+                <button class="modal-btn btn-secondary" id="cancelWithdraw">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deposit Modal -->
+    <div class="modal-overlay" id="depositModal">
+        <div class="modal">
+            <button class="modal-close" id="depositClose">&times;</button>
+            
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <h3>Deposit Funds</h3>
+                <p>Add money to your account</p>
+            </div>
+            
+            <div class="modal-content">
+                <p>Deposit using bank transfer to the account below:</p>
+                
+                <div class="bank-details">
+                    <div class="bank-detail-item">
+                        <span class="bank-detail-label">Bank Name:</span>
+                        <span class="bank-detail-value">OPay</span>
+                    </div>
+                    
+                    <div class="bank-detail-item">
+                        <span class="bank-detail-label">Account Name:</span>
+                        <span class="bank-detail-value">Okwudiri Godwin</span>
+                    </div>
+                    
+                    <div class="bank-detail-item">
+                        <span class="bank-detail-label">Account Number:</span>
+                        <span class="bank-detail-value">
+                            8064562826
+                            <button class="copy-btn" data-text="8064562826">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+                
+                <p>After transferring, your account will be credited within 24 hours.</p>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-btn btn-primary" id="confirmDeposit">I've Made Transfer</button>
+                <button class="modal-btn btn-secondary" id="cancelDeposit">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buy Bitcoin Modal -->
+    <div class="modal-overlay" id="buyBtcModal">
+        <div class="modal">
+            <button class="modal-close" id="buyBtcClose">&times;</button>
+            
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <i class="fab fa-bitcoin"></i>
+                </div>
+                <h3>Buy Bitcoin</h3>
+                <p>Purchase Bitcoin instantly</p>
+            </div>
+            
+            <div class="modal-content">
+                <div class="form-group">
+                    <label for="btcAmount">Amount in USD</label>
+                    <input type="number" id="btcAmount" placeholder="Enter amount in USD (min. $5)" min="5" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="nairaAmount">Equivalent in Naira</label>
+                    <input type="text" id="nairaAmount" placeholder="Naira equivalent" readonly>
+                </div>
+                
+                <p>Current exchange rate: $1 = ₦1489.89</p>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-btn btn-primary" id="payWithPaystack">Pay with Paystack</button>
+                <button class="modal-btn btn-secondary" id="cancelBuy">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Paystack Payment Modal -->
+    <div class="modal-overlay" id="paystackModal">
+        <div class="modal">
+            <button class="modal-close" id="paystackClose">&times;</button>
+            
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <h3>Paystack Payment</h3>
+                <p>Secure payment processing</p>
+            </div>
+            
+            <div class="modal-content">
+                <p>Transfer funds to the account below to complete your Bitcoin purchase:</p>
+                
+                <div class="bank-details">
+                    <div class="bank-detail-item">
+                        <span class="bank-detail-label">Bank Name:</span>
+                        <span class="bank-detail-value">OPay</span>
+                    </div>
+                    
+                    <div class="bank-detail-item">
+                        <span class="bank-detail-label">Account Name:</span>
+                        <span class="bank-detail-value">Okwudiri Godwin</span>
+                    </div>
+                    
+                    <div class="bank-detail-item">
+                        <span class="bank-detail-label">Account Number:</span>
+                        <span class="bank-detail-value">
+                            8064562826
+                            <button class="copy-btn" data-text="8064562826">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </span>
+                    </div>
+                    
+                    <div class="bank-detail-item">
+                        <span class="bank-detail-label">Amount to Send:</span>
+                        <span class="bank-detail-value" id="paystackAmount">$0.00</span>
+                    </div>
+                </div>
+                
+                <p>After transferring, your Bitcoin will be delivered to your wallet within 24 hours.</p>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-btn btn-primary" id="confirmPaystack">I've Made Transfer</button>
+                <button class="modal-btn btn-secondary" id="cancelPaystack">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
